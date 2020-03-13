@@ -22,9 +22,10 @@ mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true }).then(db => 
 
 
 app.get('/', (req, res) => {
-    const task = cron.schedule('*/1 * * * *', () => {
-        apiCorona();
-    });
+    // const task = cron.schedule('*/1 * * * *', () => {
+    //     apiCorona();
+    // });
+    apiCorona();
     res.send('hello');
 });
 app.listen(PORT, () => console.log('start '+PORT));
