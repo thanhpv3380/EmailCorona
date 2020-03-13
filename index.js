@@ -19,12 +19,11 @@ const apiCorona = require('./api/corona.api');
 // connection db
 mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true }).then(db => console.log('DB is Connected'));
 
-
+const task = cron.schedule('*/1 * * * *', () => {
+    apiCorona();
+});
 
 app.get('/', (req, res) => {
-    const task = cron.schedule('*/1 * * * *', () => {
-        apiCorona();
-    });
     //apiCorona();
     res.send('hello');
 });
