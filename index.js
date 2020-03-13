@@ -13,5 +13,7 @@ const apiCorona = require('./api/corona.api');
 const task = cron.schedule('*/5 * * * *', () => {
     apiCorona();
 });
-
+app.get('/', (req, res) => {
+    res.send('hello');
+});
 app.listen(PORT, () => console.log('start '+PORT));
