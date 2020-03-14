@@ -10,21 +10,22 @@ const ApiCorona = () => {
             console.error('error:', error); // Print the error if one occurred
         } else {
             let dataCurrent = JSON.parse(body);
-            console.log(dataCurrent);
-            let db = {
-                global: dataCurrent.data.global,
-                vietnam: dataCurrent.data.vietnam
-            };
-            
-            //let rs = fs.readFileSync('./data.json');
-            //let rs = await Corona.create(db);
-            let dataOld = await Corona.findOne({_id: '5e6ba1543095720fc89047a0'});
-            if (!checkObj(dataOld, db)) {  
-                console.log('fds');              
-                const updateDate = await Corona.updateOne({_id: '5e6ba1543095720fc89047a0'}, {global: db.global, vietnam: db.vietnam });
-                // sendEmail(db);
-                sendMsg(db);
-            }
+            if (dataCurrent.success){ 
+                console.log(dataCurrent);
+                let db = {
+                    global: dataCurrent.data.global,
+                    vietnam: dataCurrent.data.vietnam
+                }; 
+                //let rs = fs.readFileSync('./data.json');
+                //let rs = await Corona.create(db);
+                let dataOld = await Corona.findOne({_id: '5e6ba1543095720fc89047a0'});
+                if (!checkObj(dataOld, db)) {  
+                    console.log('fds');              
+                    const updateDate = await Corona.updateOne({_id: '5e6ba1543095720fc89047a0'}, {global: db.global, vietnam: db.vietnam });
+                    // sendEmail(db);
+                    sendMsg(db);
+                }
+            } 
         }
     });
 }
