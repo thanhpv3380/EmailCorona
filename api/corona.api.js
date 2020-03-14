@@ -1,6 +1,7 @@
 const request = require('request');
 const fs = require('fs');
-const sendEmail = require('../sendEmail/sendEmail');
+//const sendEmail = require('../sendEmail/sendEmail');
+const sendMsg = require('../sendMsg/sendMsg');
 const checkObj = require('../utils/checkObj');
 const Corona = require('../models/corona.model');
 const ApiCorona = () => {
@@ -9,6 +10,7 @@ const ApiCorona = () => {
             console.error('error:', error); // Print the error if one occurred
         } else {
             let dataCurrent = JSON.parse(body);
+            console.log(dataCurrent);
             let db = {
                 global: dataCurrent.data.global,
                 vietnam: dataCurrent.data.vietnam
@@ -19,8 +21,9 @@ const ApiCorona = () => {
             let dataOld = await Corona.findOne({_id: '5e6ba1543095720fc89047a0'});
             if (!checkObj(dataOld, db)) {  
                 console.log('fds');              
-                const updateDate = await Corona.update({_id: '5e6ba1543095720fc89047a0'}, {global: db.global, vietnam: db.vietnam });
-                sendEmail(db);
+                const updateDate = await Corona.updateOne({_id: '5e6ba1543095720fc89047a0'}, {global: db.global, vietnam: db.vietnam });
+                // sendEmail(db);
+                sendMsg(db);
             }
         }
     });
